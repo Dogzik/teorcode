@@ -7,9 +7,17 @@
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{scrextend}
+\usepackage{hyperref}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
 \usepackage{listings}
 \usepackage{csquotes}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyan,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
 
 \linespread{1.3}
 \parindent=0.6cm
@@ -50,8 +58,79 @@ $\begin{pmatrix}1\\1\\1\\0\end{pmatrix} + \begin{pmatrix}0\\0\\1\\0\end{pmatrix}
 
 \section*{№3 Расстрояние кода}
 
-TODO
+\subsection*{3.1 Граница Хэмминга}
 
+\paragraph*{}
+Для нашего $(10, 6, 3)$ кода $M = 2^k,\ q = 2$ и граница Хэмминга принимает вид: $2^k \leq \dfrac{2^n}{\sum\limits_{i = 0}^t C_i^n \left(2 - 1
+\right) ^ i} 
+\Rightarrow 
+2^k \leq \dfrac{2^n}{\sum\limits_{i = 0}^t C_i^n}
+\Rightarrow
+\sum\limits_{i = 0}^t C_i^n \leq 2^{n - k}
+\Rightarrow
+\sum\limits_{i = 0}^t C_i^{10} \leq 16
+$
+
+\paragraph*{}
+Найдём такое максимальное $d$, для которого выполняется данное соотношение при $t = \lfloor \dfrac{d - 1}{2} \rfloor$:
+
+\begin{lstlisting}[frame=single, language=Python]
+from scipy import special
+
+
+def check_hamming(n, k, d):
+    t = (d - 1) // 2
+    total = 0
+    for i in range(t + 1):
+        total += special.comb(n, i)
+    return total <= 2 ** (n - k)
+
+
+d = 1
+n = 10
+k = 6
+while check_hamming(n, k, d):
+    d += 1
+d -= 1
+print(d)
+# 4	
+\end{lstlisting}
+
+Таким образом получаем, что верхняя граница для $d$ равна $4$. То есть не существует никакого двоичного линейного $(10, 6)$-кода с минимальным расстоянием больше $4$.
+
+\subsection*{3.2 Граница Варшамова-Гилберта}
+
+При $q = 2$ граница Варшамова-Гилберта принимает вид: $2^{n - 1} > \sum\limits_{i = 0}^{d - 2} C_i^{n - 1}(2 - 1)^i$. Что в нашем случае превращается в $\sum\limits_{i = 0}^{d - 2} C_i^9 < 16$.
+ 
+Найдём максимальное $d$, что которого выполняется данное соотношение, что будет означать существование $(10, 6)$-кода с таким минимальным расстоянием:
+
+\begin{lstlisting}[frame=single, language=Python]
+from scipy import special
+
+
+def check_varshamov(n, k, d):
+    total = 0
+    for i in range(d - 1):
+        total += special.comb(n - 1, i)
+    return total < 2 ** (n - k)
+
+
+d = 1
+n = 10
+k = 6
+while check_varshamov(n, k, d):
+    d += 1
+d -= 1
+print(d)
+# 3
+\end{lstlisting}
+
+Таким образом существует двоичный линейный $(10, 6)$-код с минимальным расстоянием $d = 3$.
+
+\subsection*{3.3 Проверка оптимальности}
+
+\paragraph*{}
+Из вышеоисанного имеем, что для минимального расстояние оптимальное кода стоит искать в диапазоне от $3$ до $4$. Исследуемый код попадает в данный диапазон. К тому же по данным сайта \href{http://www.codetables.de}{codetables.de}, а также таблицы $3.2$, лучший двоичный линейный $(10, 6)$-код имеет минимальное расстояние $d = 3$, следовательно наш код является оптимальным. 
 \section*{№4 Порождающая матрица}
 	Приведём проверочную матрицу к систематическому виду.\\
 	Исходная матрица: 
@@ -176,7 +255,7 @@ print(res)
 
 Заметим, что при \enquote{систематизации} матрицы $H$ мы нигде не перестовляли столбцы, значит нам не нужна перенумеровка стобцов в $G$. При этом первый $k = 6$ столбцов матрицы $G$ образают единичную подматрицу, а следовательно линейно назависимы. Из всего вышесказанного получаем, что информационная совокупность равна $(1, 2, 3, 4, 5, 6)$  	
 
-\section*{№11 Синдромное декодирование}
+\section*{№11 Таблица синдромного декодирования}
 
 Всего у нас существует $2^r = 2^4 = 16$ синдромов. Нулевому синдрому, очевидно, соотвествует нулевой вектор ошибок. А так же, в силу того что строки $H^T$ различны, каждому вектору ошибок веса $1$ будет соотвествовать свой уникальный синдром. Итого мы построили таблицу для 11 синдромов из 16:\\
 $H^T = \begin{pmatrix}
