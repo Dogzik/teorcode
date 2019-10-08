@@ -10,10 +10,10 @@ def check_hamming(n, k, d):
 
 
 d = 1
-n = 10
+n = 23
 k = 6
 while check_hamming(n, k, d):
     d += 1
 d -= 1
 print(d)
-# 4
+# 12

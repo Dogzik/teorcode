@@ -9,10 +9,10 @@ def check_varshamov(n, k, d):
 
 
 d = 1
-n = 10
+n = 23
 k = 6
 while check_varshamov(n, k, d):
     d += 1
 d -= 1
 print(d)
-# 3
+# 8

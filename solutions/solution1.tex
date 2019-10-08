@@ -100,7 +100,7 @@ print(d)
 
 \subsection*{3.2 Граница Варшамова-Гилберта}
 
-При $q = 2$ граница Варшамова-Гилберта принимает вид: $2^{n - 1} > \sum\limits_{i = 0}^{d - 2} C_i^{n - 1}(2 - 1)^i$. Что в нашем случае превращается в $\sum\limits_{i = 0}^{d - 2} C_i^9 < 16$.
+При $q = 2$ граница Варшамова-Гилберта принимает вид: $2^{n - k} > \sum\limits_{i = 0}^{d - 2} C_i^{n - 1}(2 - 1)^i$. Что в нашем случае превращается в $\sum\limits_{i = 0}^{d - 2} C_i^9 < 16$.
  
 Найдём максимальное $d$, что которого выполняется данное соотношение, что будет означать существование $(10, 6)$-кода с таким минимальным расстоянием:
 
@@ -351,5 +351,118 @@ s & e\\
 \hline
 \end{tabular}
 \end{center}
+
+\section*{Задача 3.3}
+
+\paragraph*{}
+Выберем $n = 23,\ d = 13$.
+
+\subsection*{Граница Хэмминга}
+
+\paragraph*{}
+При $t = \lfloor \dfrac{d - 1}{2} \rfloor = 6,\ q = 2,\ M = 2^k$ граница Хэмминга принимает следующий вид: $2^k \leq \dfrac{2^{23}}{\sum\limits_{i = 0}^6 C_i^{23}}
+\Rightarrow
+k \leq 23 - \log_2 \left( \sum\limits_{i = 0}^6 C_i^{23} \right)
+\Rightarrow
+k \leq \lfloor 23 - \log_2 \left( \sum\limits_{i = 0}^6 C_i^{23} \right) \rfloor = 5
+$
+
+\paragraph*{}
+Значит ни для какого кода с $k > 5$ не существует двоичного линейного кода с заданными параметрами
+
+\subsection*{Граница Варшамова-Гилберта}
+
+\paragraph*{}
+В нашем случае граница Варшамова-Гилберта имеет вид: $2^{23 - k} > \sum\limits_{i = 0}^{13 - 2} C_i^{23 - 1}$. Преобразовав данное неравенство, получаем: $23 - k > \log_2 \left( \sum\limits_{i = 0}^{11} C_i^{22} \right)$. Или же $k \leq 23 - \log_2 \left( \sum\limits_{i = 0}^{11} C_i^{22} \right)
+\Rightarrow
+k \leq \lfloor 23 -  \log_2 \left( \sum\limits_{i = 0}^{11} C_i^{22} \right) \rfloor = 1
+$
+
+\paragraph*{}
+Получаем для кода с $k \leq 1$ (что неудивитильно) мы точно можем построить двоичный линейный код с заданными параметрами.
+
+\subsection*{Определение оптимального кода}
+
+\paragraph*{}
+Из всего вышесказанного получаем, что оптимальный код имеет $1 \leq k \leq 5$. При этом по данным сайта \href{http://www.codetables.de}{codetables.de} и таблицы $3.2$ при $k = 3$ минимальное расстояние $d = 12$, а при $k = 2$ имеем $d = 15$. Следовательно оптимальный код подходящий под данные парметры имеет $k = 2$.
+
+\section*{Задача 3.4}
+
+\paragraph*{}
+Выберем $n = 23,\ k = 6$.
+
+\subsection*{Граница Хэмминга}
+
+\paragraph*{}
+Для нашего $(23, 6)$-кода $M = 2^k,\ q = 2$ и граница Хэмминга принимает вид: $2^k \leq \dfrac{2^n}{\sum\limits_{i = 0}^t C_i^n \left(2 - 1
+\right) ^ i} 
+\Rightarrow 
+2^k \leq \dfrac{2^n}{\sum\limits_{i = 0}^t C_i^n}
+\Rightarrow
+\sum\limits_{i = 0}^t C_i^n \leq 2^{n - k}
+\Rightarrow
+\sum\limits_{i = 0}^t C_i^{23} \leq 2^{17}
+$
+
+\paragraph*{}
+Найдём такое максимальное $d$, для которого выполняется данное соотношение при $t = \lfloor \dfrac{d - 1}{2} \rfloor$:
+
+\begin{lstlisting}[frame=single, language=Python]
+from scipy import special
+
+
+def check_hamming(n, k, d):
+    t = (d - 1) // 2
+    total = 0
+    for i in range(t + 1):
+        total += special.comb(n, i)
+    return total <= 2 ** (n - k)
+
+
+d = 1
+n = 23
+k = 6
+while check_hamming(n, k, d):
+    d += 1
+d -= 1
+print(d)
+# 12	
+\end{lstlisting}
+
+Значит $12$ является верхней границей на минимальное расстояние расстояние для двочиного линейного $(23, 6)$-кода.
+
+\subsection*{Граница Варшамова-Гилберта}
+
+При $q = 2$ граница Варшамова-Гилберта принимает вид: $2^{n - k} > \sum\limits_{i = 0}^{d - 2} C_i^{n - 1}(2 - 1)^i$. Что в нашем случае превращается в $\sum\limits_{i = 0}^{d - 2} C_i^{22} < 2^{17}$.
+ 
+Найдём максимальное $d$, что которого выполняется данное соотношение, что будет означать существование $(23, 6)$-кода с таким минимальным расстоянием:
+
+\begin{lstlisting}[frame=single, language=Python]
+from scipy import special
+
+
+def check_varshamov(n, k, d):
+    total = 0
+    for i in range(d - 1):
+        total += special.comb(n - 1, i)
+    return total < 2 ** (n - k)
+
+
+d = 1
+n = 23
+k = 6
+while check_varshamov(n, k, d):
+    d += 1
+d -= 1
+print(d)
+# 8
+\end{lstlisting}
+
+Таким образом существует двоичный линейный $(23, 6)$-код с минимальным расстоянием $d = 8$.
+
+\subsection*{Определение оптимального кода}
+
+\paragraph*{}
+Из всего вышесказанного получаем, что оптимальный код имеет $8 \leq d \leq 12$. При этом по данным сайта \href{http://www.codetables.de}{codetables.de} и таблицы $3.2$ оптимальный код имеет $d = 10$, что попадает в наши границы.
 
 \end{document}
