@@ -1,0 +1,318 @@
+\documentclass[fontsize=12pt]{article}
+
+\usepackage{listings}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{listings}
+\usepackage{csquotes}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{mathtools}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyan,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\linespread{1.3}
+\parindent=0.6cm
+\lstset{tabsize = 2}
+
+\DeclareMathOperator{\rank}{rank}
+\makeatletter
+\newenvironment{sqcases}{%
+  \matrix@check\sqcases\env@sqcases
+}{%
+  \endarray\right.%
+}
+\def\env@sqcases{%
+  \let\@ifnextchar\new@ifnextchar
+  \left\lbrack
+  \def\arraystretch{1.2}%
+  \array{@{}l@{\quad}l@{}}%
+}
+\makeatother
+
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\title{Домашнее задание}
+\author{Лев Довжик, M3439 \\ Вариант №62}
+\date{}
+
+
+\begin{document}
+	\pagenumbering{gobble}
+	\maketitle
+	
+\section*{Задача 2.1}
+
+\subsection*{1) $R = \dfrac{1}{6}$}
+
+В данном случае у на всего $2^1$ кодовых слова, так всего одно из них ненулевое, то вес второго будет определять $d$. Максимально возможный вектор $(1\ 1\ 1\ 1\ 1\ 1)$ с весом 6. 
+
+Итого $G = (1\ 1\ 1\ 1\ 1\ 1)$
+
+\subsection*{2) $R = \dfrac{2}{6}$}
+
+Здесь у нас $2^2$ кодовых слова, три из которых ненулевые. Покажем порождающую матрицу, при которой $d = 4: 
+G = \begin{pmatrix}
+	 	1\ 1\ 1\ 0\ 1\ 0\\
+		0\ 1\ 1\ 1\ 0\ 1		
+	\end{pmatrix}$ 
+	
+При этом большего $d$ быть и не может, т.к. линейная комбинация(ведь кодовые слова образуют линейное пространство) двух шестимерных векторов веса 5, может быть либо равна нулевому вектору, либо вектору веса 2, а значит $d$ будет не более 2.
+
+\subsection*{3) $R = \dfrac{3}{6}$}
+
+Представим проверочную матрицу кода, который будет иметь $d = 3$. В ней все столбцы попарно различны, но $(1) + (2) = (3)$.
+
+$H = \begin{pmatrix}
+	 	0\ 1\ 1\ 0\ 0\ 1\\
+		1\ 0\ 1\ 0\ 1\ 0\\
+		1\ 1\ 0\ 1\ 0\ 0
+	\end{pmatrix}$ 
+
+Заметим, что это максимальное расстояние в силу того, что для $d = 4$ на нужно выбрать 6 двоичных векторов длины 3, так что бы как минимум любые три вектора были линейно независимы. Несложным перебором можно убедиться, что такое невозможно.
+
+\subsection*{4) $R = \dfrac{4}{6}$}
+
+Т.к. невозможно найти 6 различных двоичных векторов длины 2(столбцов проверочной матрицы), то максимальное $d = 2$ для такого кода. Представим же его проверочную матрицу:
+
+$H = \begin{pmatrix}
+	 	1\ 1\ 1\ 0\ 1\ 0\\
+		1\ 1\ 0\ 1\ 0\ 1
+	\end{pmatrix}$
+	
+\subsection*{5) $R = \dfrac{5}{6}$}
+	
+$H = (1\ 1\ 1\ 1\ 1\ 1)$ и $d$ так же равно 2. Больше же оно не может быть в силу границы Синглтона: $d \leq n - k + 1 = 2$
+
+\subsection*{6) $R = \dfrac{6}{6}$}
+
+Множество кодовых в данном случае --- это вообще все двоичные вектора длины 6. Минимальное расстояние в таком случае, очевидно, равно 1. Мы можем просто передавать исходное сообщение как есть ($G = I_6$).	
+
+\section*{Задача 2.3}
+
+\subsection*{Интерпритируем исходные матрицы как порожадющие}
+
+а)$H = \begin{pmatrix}
+1\ 1\ 0\ 1\ 0\ 0\\
+1\ 1\ 0\ 0\ 1\ 0\\
+1\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{1}{2}$
+{ } { } { }  { } { } { }
+б)$H = \begin{pmatrix}
+1\ 1\ 0\ 1\ 0\ 0\\
+1\ 1\ 0\ 0\ 1\ 0\\
+1\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{1}{2}$\\\\
+
+\noindent
+в)$H = \begin{pmatrix}
+1\ 0\ 1\ 0\ 0\ 0\\
+1\ 1\ 0\ 1\ 0\ 0\\
+0\ 1\ 0\ 0\ 1\ 0\\
+1\ 0\ 0\ 0\ 0\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{1}{3}$
+{ } { } { }  { } { } { }
+г)$H = \begin{pmatrix}
+0\ 1\ 1\ 1\ 0\ 0\\
+1\ 1\ 1\ 0\ 1\ 0\\
+0\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{1}{2}$\\\\
+
+\noindent
+д)$H = \begin{pmatrix}
+0\ 1\ 0\ 1\ 0\ 0\\
+1\ 1\ 1\ 0\ 1\ 0\\
+0\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 2, R = \dfrac{1}{2}$
+{ } { } { }  { } { } { }
+е)$H = \begin{pmatrix}
+1\ 0\ 0\ 1\ 0\ 0\\
+1\ 1\ 1\ 0\ 1\ 0\\
+1\ 1\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 2, R = \dfrac{1}{2}$\\\\
+
+\noindent
+ж)$H = \begin{pmatrix}
+1\ 0\ 1\ 0\ 0\ 0\\
+0\ 1\ 0\ 1\ 0\ 0\\
+0\ 1\ 0\ 0\ 1\ 0\\
+1\ 0\ 0\ 0\ 0\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{1}{3}$
+{ } { } { }  { } { } { }
+з)$H = \begin{pmatrix}
+1\ 0\ 1\ 0\ 0\ 0\ 0\\
+0\ 1\ 0\ 0\ 1\ 0\ 0\\
+1\ 0\ 0\ 0\ 0\ 1\ 0\\
+1\ 1\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{3}{7}$\\\\
+
+\noindent
+и)$H = \begin{pmatrix}
+1\ 0\ 1\ 1\ 0\ 0\ 0\\
+1\ 1\ 1\ 0\ 1\ 0\ 0\\
+1\ 1\ 0\ 0\ 0\ 1\ 0\\
+0\ 1\ 1\ 0\ 0\ 0\ 1\\
+\end{pmatrix} d = 4, R = \dfrac{1}{3}$
+{ } { } { }  { } { } { }
+к)$H = \begin{pmatrix}
+0\ 1\ 1\ 0\ 0\ 0\ 0\\
+1\ 0\ 0\ 0\ 1\ 0\ 0\\
+0\ 0\ 0\ 1\ 0\ 1\ 0\\
+1\ 1\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{3}{7}$\\\\
+
+\subsection*{Итерпритируем исходные матрицы как проверочные}
+
+а)$G = \begin{pmatrix}
+1\ 0\ 0\ 1\ 1\ 1\\
+0\ 1\ 0\ 0\ 1\ 1\\
+1\ 0\ 1\ 1\ 1\ 0\\
+\end{pmatrix} d = 3, R = \dfrac{1}{2}$
+{ } { } { }  { } { } { }
+б)$G = \begin{pmatrix}
+1\ 0\ 0\ 1\ 1\ 1\\
+0\ 1\ 0\ 0\ 1\ 1\\
+0\ 0\ 1\ 1\ 1\ 0\\
+\end{pmatrix} d = 3, R = \dfrac{1}{2}$\\\\
+
+\noindent
+в)$G = \begin{pmatrix}
+1\ 0\ 0\ 0\ 0\ 1\\
+0\ 1\ 0\ 0\ 1\ 0\\
+0\ 0\ 1\ 0\ 0\ 1\\
+0\ 0\ 0\ 1\ 1\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{2}{3}$
+{ } { } { }  { } { } { }
+г)$G = \begin{pmatrix}
+1\ 0\ 0\ 1\ 1\ 0\\
+0\ 1\ 0\ 1\ 0\ 1\\
+0\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 2, R = \dfrac{1}{2}$\\\\
+
+\noindent
+д)$G = \begin{pmatrix}
+1\ 0\ 0\ 1\ 1\ 1\\
+0\ 1\ 0\ 1\ 0\ 0\\
+0\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix} d = 2, R = \dfrac{1}{2}$
+{ } { } { }  { } { } { }
+е)$G = \begin{pmatrix}
+1\ 0\ 0\ 1\ 0\ 0\\
+0\ 1\ 1\ 1\ 0\ 1\\
+0\ 0\ 0\ 0\ 1\ 1\\
+\end{pmatrix} d = 2, R = \dfrac{1}{2}$\\\\
+
+\noindent
+ж)$G = \begin{pmatrix}
+1\ 0\ 0\ 0\ 0\ 1\\
+0\ 1\ 0\ 0\ 1\ 0\\
+0\ 0\ 1\ 0\ 0\ 1\\
+0\ 0\ 0\ 1\ 1\ 0\\
+\end{pmatrix} d = 2, R = \dfrac{2}{3}$
+{ } { } { }  { } { } { }
+з)$G = \begin{pmatrix}
+1\ 0\ 0\ 0\ 0\ 1\ 0\\
+0\ 1\ 0\ 0\ 1\ 0\ 0\\
+0\ 0\ 1\ 0\ 0\ 1\ 0\\
+0\ 0\ 0\ 1\ 1\ 1\ 1\\
+\end{pmatrix} d = 2, R = \dfrac{4}{7}$\\\\
+
+\noindent
+и)$G = \begin{pmatrix}
+1\ 0\ 0\ 0\ 1\ 0\ 1\\
+0\ 1\ 0\ 0\ 1\ 1\ 1\\
+0\ 0\ 1\ 0\ 1\ 1\ 0\\
+0\ 0\ 0\ 1\ 0\ 1\ 1\\
+\end{pmatrix} d = 3, R = \dfrac{4}{7}$
+{ } { } { }  { } { } { }
+к)$G = \begin{pmatrix}
+1\ 0\ 0\ 0\ 1\ 0\ 0\\
+0\ 1\ 0\ 0\ 1\ 1\ 1\\
+0\ 0\ 1\ 0\ 1\ 1\ 1\\
+0\ 0\ 0\ 1\ 0\ 1\ 0\\
+\end{pmatrix} d = 2, R = \dfrac{4}{7}$\\\\
+
+
+\section*{Задача 2.11}
+
+Предложим код с $d = 5, k = 3, n = 10 < 5 \cdot 3 = 15$. Для этого будем порождать его из $g = (1\ 1\ 1\ 0\ 1\ 0\ 0\ 1\ 0\ 0)$.\\
+
+$G = \begin{pmatrix}
+1\ 1\ 1\ 0\ 1\ 0\ 0\ 1\ 0\ 0\\
+0\ 1\ 1\ 1\ 0\ 1\ 0\ 0\ 1\ 0\\
+0\ 0\ 1\ 1\ 1\ 0\ 1\ 0\ 0\ 1\\
+\end{pmatrix}$\\
+
+Докажем, что его минимальное расстояние равно 5. Для этого переберём все ненулевые сообщения и найдём минимальный вес соответствующих кодовых слов:
+
+\begin{itemize}
+\item
+$m = (0\ 0\ 1) \Rightarrow mG = (0\ 0\ 1\ 1\ 1\ 0\ 1\ 0\ 0\ 1) \Rightarrow w = 5$ 
+
+\item
+$m = (0\ 1\ 0) \Rightarrow mG = (0\ 1\ 1\ 1\ 0\ 1\ 0\ 0\ 1\ 0) \Rightarrow w = 5$
+
+\item
+$m = (0\ 1\ 1) \Rightarrow mG = (0\ 1\ 0\ 0\ 1\ 1\ 1\ 0\ 1\ 1) \Rightarrow w = 6$
+
+\item
+$m = (1\ 0\ 0) \Rightarrow mG = (1\ 1\ 1\ 0\ 1\ 0\ 0\ 1\ 0\ 0) \Rightarrow w = 5$
+
+\item
+$m = (1\ 0\ 1) \Rightarrow mG = (1\ 1\ 0\ 1\ 0\ 0\ 1\ 1\ 0\ 1) \Rightarrow w = 6$
+
+\item
+$m = (1\ 1\ 0) \Rightarrow mG = (1\ 0\ 0\ 1\ 1\ 1\ 0\ 1\ 1\ 0) \Rightarrow w = 6$
+
+\item
+$m = (1\ 1\ 1) \Rightarrow mG = (1\ 0\ 1\ 0\ 0\ 1\ 1\ 1\ 1\ 1) \Rightarrow w = 7$
+\end{itemize} 
+
+Как видно минимальный вес равен 5, а значит ему и равно минимальное расстояние между кодовыми словами.
+
+\section*{Задача 2.12}
+
+\subsection*{a) g = (1 1 0 1)}
+
+$G = \begin{pmatrix}
+1\ 1\ 0\ 1\ 0\ 0\ 0\ 0\ 0\ 0\\
+0\ 0\ 1\ 1\ 0\ 1\ 0\ 0\ 0\ 0\\
+0\ 0\ 0\ 0\ 1\ 1\ 0\ 1\ 0\ 0\\
+0\ 0\ 0\ 0\ 0\ 0\ 1\ 1\ 0\ 1\\
+\end{pmatrix} n = 10, R = \dfrac{2}{5}, d = 3$\\
+ 
+Лучший же $(10, 4)$-код, по данным \href{http://www.codetables.de}{codetables.de}, имеет минимальное расстояние $4$. 
+
+\subsection*{б) g = (1 1 0 1 0 1)}
+
+$G = \begin{pmatrix}
+1\ 1\ 0\ 1\ 0\ 1\ 0\ 0\ 0\ 0\\
+0\ 0\ 1\ 1\ 0\ 1\ 0\ 1\ 0\ 0\\
+0\ 0\ 0\ 0\ 1\ 1\ 0\ 1\ 0\ 1\\
+\end{pmatrix} n = 10, R = \dfrac{3}{10}, d = 4$\\
+ 
+Лучший же $(10, 3)$-код, по данным \href{http://www.codetables.de}{codetables.de}, имеет минимальное расстояние $5$. 
+
+\subsection*{в) g = (1 1 0 1 1 1)}
+
+$G = \begin{pmatrix}
+1\ 1\ 0\ 1\ 1\ 1\ 0\ 0\ 0\ 0\\
+0\ 0\ 1\ 1\ 0\ 1\ 1\ 1\ 0\ 0\\
+0\ 0\ 0\ 0\ 1\ 1\ 0\ 1\ 1\ 1\\
+\end{pmatrix} n = 10, R = \dfrac{3}{10}, d = 5$\\
+ 
+ Минимального расстояние этого кода совпадает с таковым для лучшего $(10, 3)$-кода, по данным \href{http://www.codetables.de}{codetables.de}.
+
+\end{document}
+ 

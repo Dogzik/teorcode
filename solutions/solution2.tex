@@ -1,0 +1,104 @@
+\documentclass[fontsize=14pt]{article}
+
+\usepackage{listings}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{listings}
+\usepackage{csquotes}
+\usepackage{xcolor}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyan,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\linespread{1.3}
+\parindent=0.6cm
+\lstset{tabsize = 2}
+
+\title{Домашнее задание №2}
+\author{Лев Довжик, M3439 \\ Вариант №62}
+\date{}
+
+
+\begin{document}
+	\pagenumbering{gobble}
+	\maketitle
+	
+\section*{№8 Привести к минимальной спэновой форме и построить профиль сложности}
+
+$G = 
+\begin{pmatrix}
+	1\ 0\ 0\ 0\ 0\ 0\ 1\ 0\ 1\ 1\\
+	0\ 1\ 0\ 0\ 0\ 0\ 0\ 1\ 1\ 0\\
+	0\ 0\ 1\ 0\ 0\ 0\ 1\ 1\ 0\ 0\\
+	0\ 0\ 0\ 1\ 0\ 0\ 1\ 0\ 1\ 0\\
+	0\ 0\ 0\ 0\ 1\ 0\ 0\ 0\ 1\ 1\\
+	0\ 0\ 0\ 0\ 0\ 1\ 0\ 1\ 0\ 1	
+\end{pmatrix}$
+Прибавим последнюю строку к $1$ и $9$
+
+\bigskip
+\noindent
+$G = 
+\begin{pmatrix}
+	1\ 0\ 0\ 0\ 0\ 1\ 1\ 1\ 1\ 0\\
+	0\ 1\ 0\ 0\ 0\ 0\ 0\ 1\ 1\ 0\\
+	0\ 0\ 1\ 0\ 0\ 0\ 1\ 1\ 0\ 0\\
+	0\ 0\ 0\ 1\ 0\ 0\ 1\ 0\ 1\ 0\\
+	0\ 0\ 0\ 0\ 1\ 1\ 0\ 1\ 1\ 0\\
+	0\ 0\ 0\ 0\ 0\ 1\ 0\ 1\ 0\ 1	
+\end{pmatrix}$
+Прибавим $9$ строку к $1,\ 2$ и $8$
+
+\bigskip
+\noindent
+$G = 
+\begin{pmatrix}
+	1\ 0\ 0\ 0\ 1\ 0\ 1\ 0\ 0\ 0\\
+	0\ 1\ 0\ 0\ 1\ 1\ 0\ 0\ 0\ 0\\
+	0\ 0\ 1\ 0\ 0\ 0\ 1\ 1\ 0\ 0\\
+	0\ 0\ 0\ 1\ 1\ 1\ 1\ 1\ 0\ 0\\
+	0\ 0\ 0\ 0\ 1\ 1\ 0\ 1\ 1\ 0\\
+	0\ 0\ 0\ 0\ 0\ 1\ 0\ 1\ 0\ 1	
+\end{pmatrix}$
+Прибавим $7$ строку к $6$
+
+\bigskip
+\noindent
+$G = 
+\begin{pmatrix}
+	1\ 0\ 0\ 0\ 1\ 0\ 1\ 0\ 0\ 0\\
+	0\ 1\ 0\ 0\ 1\ 1\ 0\ 0\ 0\ 0\\
+	0\ 0\ 1\ 1\ 1\ 1\ 0\ 0\ 0\ 0\\
+	0\ 0\ 0\ 1\ 1\ 1\ 1\ 1\ 0\ 0\\
+	0\ 0\ 0\ 0\ 1\ 1\ 0\ 1\ 1\ 0\\
+	0\ 0\ 0\ 0\ 0\ 1\ 0\ 1\ 0\ 1	
+\end{pmatrix}$
+Прибавим $3$ сроку ко $2$
+
+\bigskip
+\noindent
+$G = 
+\begin{pmatrix}
+	\textbf{1}\ \textit{0\ 0\ 0\ 1\ 0}\ \underline{1}\ 0\ 0\ 0\\
+	0\ \textbf{1}\ \textit{1}\ \underline{1}\ 0\ 0\ 0\ 0\ 0\ 0\\
+	0\ 0\ \textbf{1}\ \textit{1\ 1}\ \underline{1}\ 0\ 0\ 0\ 0\\
+	0\ 0\ 0\ \textbf{1}\ \textit{1\ 1\ 1}\ \underline{1}\ 0\ 0\\
+	0\ 0\ 0\ 0\ \textbf{1}\ \textit{1\ 0\ 1}\ \underline{1}\ 0\\
+	0\ 0\ 0\ 0\ 0\ \textbf{1}\ \textit{0\ 1\ 0}\ \underline{1}	
+\end{pmatrix}$
+
+\bigskip
+\noindent
+Профиль сложности $(2^0,\ 2^1,\ 2^2,\ 2^3,\ 2^3,\ 2^4,\ 2^4,\ 2^3,\ 2^2,\ 2^1,\ 2^0)$
+
+\end{document}

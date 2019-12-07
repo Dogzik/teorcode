@@ -1,0 +1,85 @@
+\documentclass[fontsize=12pt]{article}
+
+\usepackage{listings}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{listings}
+\usepackage{csquotes}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{mathtools}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyan,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\linespread{1.3}
+\parindent=0.6cm
+\lstset{tabsize = 2}
+
+\DeclareMathOperator{\rank}{rank}
+\makeatletter
+\newenvironment{sqcases}{%
+  \matrix@check\sqcases\env@sqcases
+}{%
+  \endarray\right.%
+}
+\def\env@sqcases{%
+  \let\@ifnextchar\new@ifnextchar
+  \left\lbrack
+  \def\arraystretch{1.2}%
+  \array{@{}l@{\quad}l@{}}%
+}
+\makeatother
+
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\title{Домашнее задание}
+\author{Лев Довжик, M3439 \\ Вариант №62}
+\date{}
+
+
+\begin{document}
+	\pagenumbering{gobble}
+	\maketitle
+	
+\section*{Задача 3.1}
+
+\subsection*{Коды Хэмминга}
+
+Зафиксируем конкретное $r$. Тогда $n = 2^r - 1, k = 2^r - r - 1, d = 3$\\
+
+Для двоичного кода граница Хэмминга имеет вид: $2^k \leq \dfrac{2^n}{\sum\limits_{i = 0}^t C_n^i}$\\ 
+
+Немного преобразовав, получаем его в следующем виде: $\sum\limits_{i = 0}^t C_n^i \leq 2^{n - k}$\\
+
+Так как $d = 3$, то $t = \floor*{\dfrac{3 - 1}{2}} = 1$, то есть код исправляет любые однократные ошибки. Тогда левая часть имеет вид: $\sum\limits_{i = 0}^1 C_n^i = C_n^0 + C_n^1 = 1 + n = 1 + (2^r - 1) = 2^r$\\
+
+Справа же $2^{n - k} = 2^{2^r - 1 - (2^r - r - 1)} = 2^{2^r - 1 - 2^r + r + 1} = 2^r$
+
+Как  видно обе части неравенства равны, а значит код Хэмминга удовлетврояет границе Хэмменга с равенством.
+
+\subsection*{Коды Хэмминга}
+
+$n = 23, k = 12, d = 7$\\
+
+Для двоичного кода граница Хэмминга имеет вид: $2^k \leq \dfrac{2^n}{\sum\limits_{i = 0}^t C_n^i}$\\ 
+
+Немного преобразовав, получаем его в следующем виде: $\sum\limits_{i = 0}^t C_n^i \leq 2^{n - k}$\\
+
+Так как $d = 7$, то $t = \floor*{\dfrac{7 - 1}{2}} = 3$, то есть код исправляет любые трёхкратные ошибки. Тогда левая часть имеет вид: $\sum\limits_{i = 0}^3 C_n^i = C_{23}^0 + C_{23}^1 + C_{23}^2 + C_{23}^3 = 2048$\\
+
+Справа же $2^{n - k} = 2^{23 - 12} = 2^{11} = 2048$
+
+Как  видно обе части неравенства равны, а значит данный код Голея удовлетврояет границе Хэмменга с равенством.
+\end{document}
+ 
